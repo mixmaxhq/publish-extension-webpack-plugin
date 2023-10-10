@@ -67,7 +67,7 @@ export default class PublishExtensionPlugin {
   makeBundle = async (directory) => {
     const options = {
       source: '*',
-      destination: resolve(directory, '.bundle.zip'),
+      destination: resolve(directory, '-bundle.zip'),
       cwd: directory,
     };
     await zip(options);
