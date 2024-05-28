@@ -19,6 +19,7 @@ export default class PublishExtensionPlugin {
    * @param {String} [options.clientId] Google OAuth 2.0 client ID
    * @param {String} [options.clientSecret] Google OAuth 2.0 client secret
    * @param {String} [options.refreshToken] Google OAuth 2.0 refresh token
+   * @param {String} [options.deployPercentage] Percentage of users who will receive an update to this version
    * @param {String} [options.target="default"] Publish target.
    * @param {String} [options.path] Path to a directory containing a manifest.json file.
    * If omitted, webpack's output.path directory will be used.
@@ -84,6 +85,7 @@ export default class PublishExtensionPlugin {
       clientId = process.env.GOOGLE_CLIENT_ID,
       clientSecret = process.env.GOOGLE_CLIENT_SECRET,
       refreshToken = process.env.GOOGLE_REFRESH_TOKEN,
+      deployPercentage = undefined,
     } = this.options;
 
     const webstore = new ChromeWebStoreClient({extensionId, clientId, clientSecret, refreshToken});
@@ -91,7 +93,7 @@ export default class PublishExtensionPlugin {
     const zipFile = createReadStream(bundle);
 
     await this.uploadZip(webstore, token, zipFile);
-    await this.publishDraft(webstore, token);
+    await this.publishDraft(webstore, token, deployPercentage);
   }
 
   /**
@@ -116,16 +118,18 @@ export default class PublishExtensionPlugin {
    * Publishes the current draft as a new extension version.
    * @param {ChromeWebStoreClient} webstore Chrome Web Store client used for uploading.
    * @param {String} token OAuth 2.0 token to authenticate with.
+   * @param {number?} deployPercentage Percentage of users who will receive an update to this version
    * @throws when the publish fails
    */
-  publishDraft = async (webstore, token) => {
+  publishDraft = async (webstore, token, deployPercentage = undefined) => {
     const {target = 'default'} = this.options;
 
     if (target === 'draft') {
       this.log.info('Skipping the publishing step.');
       return;
     }
-    const {status: statuses, statusDetail: details} = await webstore.publish(target, token);
+    const {status: statuses, statusDetail: details} =
+      await webstore.publish(target, token, deployPercentage);
 
     if (statuses.includes('OK')) {
       this.log.info('Published new extension version.');

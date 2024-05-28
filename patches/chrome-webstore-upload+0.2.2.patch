@@ -1,0 +1,30 @@
+diff --git a/node_modules/chrome-webstore-upload/index.js b/node_modules/chrome-webstore-upload/index.js
+index 3524643..ec10cd1 100644
+--- a/node_modules/chrome-webstore-upload/index.js
++++ b/node_modules/chrome-webstore-upload/index.js
+@@ -3,8 +3,9 @@ const got = require('got');
+ const rootURI = 'https://www.googleapis.com';
+ const refreshTokenURI = 'https://www.googleapis.com/oauth2/v4/token';
+ const uploadExistingURI = id => `${rootURI}/upload/chromewebstore/v1.1/items/${id}`;
+-const publishURI = (id, target) => (
++const publishURI = (id, target, deployPercentage) => (
+     `${rootURI}/chromewebstore/v1.1/items/${id}/publish?publishTarget=${target}`
++        + (deployPercentage == undefined ? '' : `&deployPercentage=${deployPercentage}`)
+ );
+ 
+ const requiredFields = [
+@@ -42,12 +43,12 @@ class APIClient {
+         });
+     }
+ 
+-    publish(target = 'default', token) {
++    publish(target = 'default', token, deployPercentage = undefined) {
+         const { extensionId } = this;
+         const eventualToken = token ? Promise.resolve(token) : this.fetchToken();
+ 
+         return eventualToken.then(token => {
+-            return got.post(publishURI(extensionId, target), {
++            return got.post(publishURI(extensionId, target, deployPercentage), {
+                 headers: this._headers(token),
+                 json: true
+             }).then(this._extractBody);

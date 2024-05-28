@@ -186,7 +186,7 @@ describe('publishDraft', () => {
 
     await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
 
-    expect(mockPublish).toHaveBeenCalledWith('default', 'token');
+    expect(mockPublish).toHaveBeenCalledWith('default', 'token', undefined);
     expect(plugin.log.info).toHaveBeenCalledWith('Published new extension version.');
   });
 
@@ -201,7 +201,7 @@ describe('publishDraft', () => {
     try {
       await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
     } catch (err) {
-      expect(mockPublish).toHaveBeenCalledWith('default', 'token');
+      expect(mockPublish).toHaveBeenCalledWith('default', 'token', undefined);
       expect(plugin.log.error).toHaveBeenCalledWith('ITEM_PENDING_REVIEW: foobar');
     }
   });
@@ -213,7 +213,7 @@ describe('publishDraft', () => {
 
     await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
 
-    expect(mockPublish).toHaveBeenCalledWith('trustedTesters', 'token');
+    expect(mockPublish).toHaveBeenCalledWith('trustedTesters', 'token', undefined);
     expect(plugin.log.info).toHaveBeenCalledWith('Published new extension version.');
   });
 
@@ -226,5 +226,16 @@ describe('publishDraft', () => {
 
     expect(mockPublish).not.toHaveBeenCalled();
     expect(plugin.log.info).toHaveBeenCalledWith('Skipping the publishing step.');
+  });
+
+  it('should pass deploy percentage if options.deployPercentage is set', async () => {
+    const plugin = new Plugin({});
+    plugin.log.info = jest.fn();
+    mockPublish.mockImplementation(() => ({status: ['OK'], statusDetail: ['OK.']}));
+
+    await plugin.publishDraft(new ChromeWebstoreUpload(), 'token', 42);
+
+    expect(mockPublish).toHaveBeenCalledWith('default', 'token', 42);
+    expect(plugin.log.info).toHaveBeenCalledWith('Published new extension version.');
   });
 });

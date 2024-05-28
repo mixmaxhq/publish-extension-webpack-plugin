@@ -20,8 +20,9 @@
   ],
   "main": "dist/@mixmaxhq/publish-extension-webpack-plugin.js",
   "scripts": {
+    "postinstall": "patch-package",
     "example": "webpack --config example/webpack.config.babel.js",
-    "build": "webpack",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
     "test": "jest --coverage",
     "lint": "eslint .",
     "prepare": "npm run build",
@@ -61,6 +62,7 @@
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
     "npm-audit-ci": "^1.0.1",
+    "patch-package": "^8.0.0",
     "schema-utils": "^1.0.0",
     "semantic-release": "^17.2.3",
     "webpack": "^4.20.2",
