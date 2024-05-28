@@ -13,6 +13,9 @@
     "refreshToken": {
       "type": "string"
     },
+    "deployPercentage": {
+      "type": "number"
+    },
     "target": {
       "enum": ["default", "draft", "trustedTesters"]
     },
