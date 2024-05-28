@@ -22,7 +22,7 @@
   "scripts": {
     "postinstall": "patch-package",
     "example": "webpack --config example/webpack.config.babel.js",
-    "build": "webpack",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
     "test": "jest --coverage",
     "lint": "eslint .",
     "prepare": "npm run build",
