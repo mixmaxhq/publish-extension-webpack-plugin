@@ -1,3 +1,16 @@
+## [1.2.0](https://github.com/mixmaxhq/publish-extension-webpack-plugin/compare/v1.1.1...v1.2.0) (2024-05-28)
+
+
+### Features
+
+* support `deployPercentage` when publishing ([aa995d4](https://github.com/mixmaxhq/publish-extension-webpack-plugin/commit/aa995d423af944176ef88f25f1bb60fb4bc35921))
+
+
+### Bug Fixes
+
+* avoid `.bundle` extension ([08950fd](https://github.com/mixmaxhq/publish-extension-webpack-plugin/commit/08950fd6f26e88f1ba1565a5395d0dacd8153381))
+* build error ERR_OSSL_EVP_UNSUPPORTED ([32e25ff](https://github.com/mixmaxhq/publish-extension-webpack-plugin/commit/32e25ffc15b319149fb9760a4ea46715d3102968))
+
 ### [1.1.1](https://github.com/mixmaxhq/publish-extension-webpack-plugin/compare/v1.1.0...v1.1.1) (2022-10-28)
 
 
