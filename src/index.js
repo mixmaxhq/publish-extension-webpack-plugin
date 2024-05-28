@@ -118,10 +118,10 @@ export default class PublishExtensionPlugin {
    * Publishes the current draft as a new extension version.
    * @param {ChromeWebStoreClient} webstore Chrome Web Store client used for uploading.
    * @param {String} token OAuth 2.0 token to authenticate with.
-   * @param {number | undefined} deployPercentage Percentage of users who will receive an update to this version
+   * @param {number?} deployPercentage Percentage of users who will receive an update to this version
    * @throws when the publish fails
    */
-  publishDraft = async (webstore, token, deployPercentage) => {
+  publishDraft = async (webstore, token, deployPercentage = undefined) => {
     const {target = 'default'} = this.options;
 
     if (target === 'draft') {
