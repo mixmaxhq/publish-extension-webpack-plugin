@@ -1,3 +1,10 @@
+### [1.2.6](https://github.com/mixmaxhq/publish-extension-webpack-plugin/compare/v1.2.5...v1.2.6) (2024-05-28)
+
+
+### Bug Fixes
+
+* force release again x5 ([c946d06](https://github.com/mixmaxhq/publish-extension-webpack-plugin/commit/c946d06b95554b68219becc58e67fa506865f0a3))
+
 ### [1.2.5](https://github.com/mixmaxhq/publish-extension-webpack-plugin/compare/v1.2.4...v1.2.5) (2024-05-28)
 
 
